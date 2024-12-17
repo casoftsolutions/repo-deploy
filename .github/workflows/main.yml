@@ -1,1 +1,28 @@
 
+name: Repositorio Deploy
+on:
+    workflow_call:
+        inputs:
+            ambiente:
+                required: true
+                type: string
+                description: 'Manifesto deploy Kubernetes'
+            versao:
+                    required: true
+                    type: number
+                    description: 'Versao'
+        secrets: 
+            token_acesso:
+                required: true
+                description: 'Token de acesso ao cluster Kubernetes'
+       
+jobs:
+    deploy-k8s:
+        runs-on: ubuntu-latest
+        steps: 
+        - name: Obtendo o código
+          uses: actions/checkout@v4.1.5
+        - name: Configuração de contexto do Kubernetes
+          run: echo "${{ inputs.ambiente}} v${{ inputs.versao}} Configuração de contexto do Kubernetes realizada com sucesso!"
+        - name: Obetendo secrets
+          run: echo "Valor da secrets:${{ secrets.token_acesso}}"
